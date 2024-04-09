@@ -1,0 +1,22 @@
+{% extends "layouts/blank.html" %}
+
+{% block content %}
+
+<h1 class="text-center">Blog Content</h1>
+    
+    <div class="col cols-2">
+        <div class="space-4">
+            {% for post in posts %}
+                <article class="card p-6 bg-gray-100 rounded-xl m-4">
+                    <h2 class="text-3xl card-title text-purple-800">{{ post.title }}</h2>
+                    <p>{{ post.intro }}</p>
+                    <p class="text-gray-700">{{ post.body }}</p>
+                    <p class="text-sm text-gray-700">{{ post.created_at }}</p>
+                    <a  class="p-2 rounded-md bg-emerald-500" href="">Read More</a>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+
+  
+{% endblock content %}
