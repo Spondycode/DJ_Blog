@@ -2,14 +2,50 @@
 
 {% block content %}
 
-<div class=" text-gray-700">
+<article class=" text-gray-700">
     <h2 class="text-3xl font-semibold p-2 text-purple-700 text-center mb-6 border-b-2">{{ post.title }}</h2>
-      <p class=" text-sm">{{ post.created_at }}</p>
-      <p>{{ post.intro }}</p>
-      <p>{{ post.body }}</p>
-      <p class="border-t-2 mt-9">{{ post.author }}</p>
-</div>
+    <p class=" text-sm">{{ post.category.title }} | {{ post.created_at }}</p>
+    <p class=" font-semibold ">{{ post.intro }}</p>
+    <p>{{ post.body }}</p>
+    <p class="border-t-2 mt-9">{{ post.author }}</p>
+</article>
 
 <div class="mt-8">
-    <a href="{% url 'frontpage' %}" class="button button-gray">Back to Posts</a>
-{% endblock content %}
+    <button class=" button-alert"><a href="{% url 'frontpage' %}">Back to Posts</a></button>
+
+    <div class="bg-slate-200 mt-4 p-2 rounded-md">
+        <h3 class="text-3xl font-semibold p-2 text-purple-700 text-center mb-6 border-b-2">Comments</h3>
+
+
+        {% for comment in post.comments.all %}
+        <div class="mb-4">
+            <p>{{ comment.name }} | {{ comment.created_at|timesince }}</p>
+            <p>{{ comment.comment }}</p>
+        </div>
+        {% endfor %}
+
+
+        <h4 class=" p-2 text-purple-700 mb-6 border-b-2">Add New Comment</h4>
+        <form method="post" action="." >
+            {% csrf_token %}
+
+            <div class="m-2">
+                <label class="text-purple-800">Name</label>
+                <input type="text" name="name" class="py-4 px-6 rounded-xl bg-white">
+            </div>
+
+            <div class="m-2">
+                <label class="text-purple-800">Email</label>
+                <input type="email" name="email" class="py-4 px-6 rounded-xl bg-white">
+            </div>
+
+            <div class="m-2">
+                <label class="text-purple-800">Comment</label>
+                <textarea name="comment" class="py-4 px-6 rounded-xl bg-white"></textarea>
+            </div>
+            <div>
+                <button class="button-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    {% endblock content %}
